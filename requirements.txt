@@ -1,0 +1,17 @@
+psycopg2--binary==2.9.7
+ConfigSpace==0.6.1      
+typing-extensions==4.13.2  
+numpy==1.26.4
+pandas==2.2.3
+sqlalchemy==2.0.41
+openai==1.35.6
+scikit-learn==1.5.1
+scikit-optimize==0.10.2
+scipy==1.10.1
+shap==0.47.2
+langchain==0.3.25
+langchain-chroma==0.2.4
+langchain-community==0.3.24
+langchain-core==0.3.60
+langchain-openai==0.3.17
+langchain-text-splitters==0.3.8

@@ -1,0 +1,1 @@
+Our experimental procedures are executed on a cloud server furnished with a 24-core Intel Xeon E5-2676 v3 CPU, 128 GB of Random Access Memory (RAM), and a 1TB Solid State Drive (SSD). Moreover, a GeForce RTX 2080 Ti graphics card with 22 GB of dedicated memory is also utilized in our experiments. 
