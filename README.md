@@ -4,7 +4,7 @@
 </div>
 <!-- <img src="/overview/kftune.png" alt="KFTune overview" width="800":> -->
 
-KFTune is a knowledge-driven database tuning framework that builds a dynamic, knob-centric knowledge forest to guide efficient, workload-aware optimization. It integrates Bayesian optimization into genetic algorithms and uses Gumbel-Softmax for joint tuning of categorical and continuous knobs. 
+**KFTune** is a knowledge-driven database tuning framework that builds a dynamic, knob-centric knowledge forest to guide efficient, workload-aware optimization. It integrates Bayesian optimization into genetic algorithms and uses Gumbel-Softmax for joint tuning of categorical and continuous knobs. 
 
 ## Quick Start
 The following instructions have been tested on Ubuntu 20.04 and PostgreSQL v14.9:
