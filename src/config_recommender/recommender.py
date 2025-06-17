@@ -7,7 +7,7 @@ import numpy as np
 
 class Recommender(DefaultSpace):
 
-    def __init__(self, dbms, test, timeout, config_encoder, knowledge_forest, gpt_knobs, history, seed):
+    def __init__(self, dbms, test, timeout, config_encoder, knowledge_forest, knob_num, gpt_knobs, history, seed):
         if test == "tpch":
             self.weight = 1.0
         elif test == "chbenchmark":
@@ -15,13 +15,13 @@ class Recommender(DefaultSpace):
         else:
             self.weight = 0.0
         self.max_iterations = 80
-        # 定义配置空间（包含连续和离散参数）
         self.config_encoder = config_encoder
         self.history = []
         self.population, self.fitness = history
         self.continuous_params = config_encoder.get_continuous_dim()
         self.knowledge_forest = knowledge_forest
         self.gpt_knobs = gpt_knobs
+        self.knob_num = knob_num
         
         self.bo = BayesianOptimizer(surrogate_type="GP", acquisition_type="PI")
         super().__init__(dbms, test, timeout, seed)
@@ -55,7 +55,7 @@ class Recommender(DefaultSpace):
             if iteration%20 == 0 and iteration != 0:
                 query_text =  "Which database knobs contribute most to system performance under different workloads?"
                 results = self.knowledge_forest.query(query_text, k=2)
-                selected_knobs = self.gpt_knobs.selection(results,2)['selected_knobs']
+                selected_knobs = self.gpt_knobs.selection(results, self.knob_num)['selected_knobs']
                 self.config_encoder.selected_knobs = selected_knobs       
 
         print(self.history[0])
@@ -68,15 +68,13 @@ class Recommender(DefaultSpace):
     
     def shap(self, next):
         X = np.array(self.population)
-        # X = self.ea.population
         y = np.array(self.fitness)
         model = GaussianProcessRegressor(kernel=Matern(nu=2.5), alpha=1e-6, normalize_y=True)
         model.fit(X, y)
         explainer = shap.KernelExplainer(model.predict, X)
-
         shap_values = explainer.shap_values(next)
-        shap_values = np.array(shap_values)  # shape = (num_features,)
-        top_2_idx = np.argsort(np.abs(shap_values))[-2:][::-1]  # 从大到小排列取前两个索引
+        shap_values = np.array(shap_values)
+        top_2_idx = np.argsort(np.abs(shap_values))[-2:][::-1]
         return top_2_idx
     
 

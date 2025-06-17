@@ -30,7 +30,9 @@ if __name__ == '__main__':
     parser.add_argument("db", type=str, nargs='?', default="postgres")
     parser.add_argument("test", type=str, nargs='?', default="tpch")
     parser.add_argument("timeout", type=int, nargs='?', default=180)
+    parser.add_argument("knob_num", type=int, default=10)
     parser.add_argument("-seed", type=int, default=50)
+    
     args = parser.parse_args()
     print(f'Input arguments: {args}')
     time.sleep(2)
@@ -77,7 +79,7 @@ if __name__ == '__main__':
     # Knob selection before Recommender
     query_text =  "Which database knobs contribute most to system performance under different workloads?"
     results = knowledge_forest.query(query_text, k=2)
-    config_encoder.selected_knobs = gpt_knobs.selection(results, 10)['selected_knobs']
+    config_encoder.selected_knobs = gpt_knobs.selection(results, args.knob_num)['selected_knobs']
 
     # Recommender
     recommender = Recommender(
@@ -85,6 +87,7 @@ if __name__ == '__main__':
         config_encoder=config_encoder,
         knowledge_forest=knowledge_forest,
         gpt_knobs = gpt_knobs,
+        knob_num = args.knob_num,
         history=sample_workshop.get_history(),
         test=args.test, 
         timeout=args.timeout, 

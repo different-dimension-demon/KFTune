@@ -232,7 +232,7 @@ class DefaultSpace:
                 raise RuntimeError("Benchmark is still running. Terminate it now.") 
             else:
                 print("Benchmark has finished.")
-                if runner.check_sequence_in_file():  ### 如果query出错
+                if runner.check_sequence_in_file():
                     raise RuntimeError("ERROR in Query.") 
                 throughput, average_latency = runner.get_throughput(), runner.get_latency()
 

@@ -15,7 +15,6 @@ class Sample_Workshop(DefaultSpace):
             self.weight = 0.5
         else:
             self.weight = 0.0
-        # 定义配置空间（包含连续和离散参数）
         self.config_encoder = config_encoder
         self.ea = EvolutionaryAlgorithmAdvisor(
             config_encoder=config_encoder,

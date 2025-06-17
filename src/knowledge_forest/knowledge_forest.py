@@ -10,9 +10,6 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 from langchain.docstore.document import Document
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
-
-# import sys
-# sys.path.append('/root/KFTune/src')
 from knowledge_handler.kf_Rooting import *
 from knowledge_handler.kf_Growing import *
 
@@ -310,9 +307,9 @@ class KnowledgeForest:
 def load_root_objects_from_directory(directory):
     loader = DirectoryLoader(
         directory,
-        glob="**/*.txt",                     # 只加载 .txt 文件
+        glob="**/*.txt",                
         loader_cls=TextLoader,
-        loader_kwargs={"encoding": "utf-8"}  # 避免乱码
+        loader_kwargs={"encoding": "utf-8"} 
     )
     documents = loader.load()
     root_dict = {}

@@ -40,7 +40,5 @@ class KF_Sum(GPT):
         file_path = os.path.join(self.folder, f"{name}.json")
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(suggestions["summary"], f, indent=4, ensure_ascii=False)
-        
-        self.token += self.calc_token(prompt, suggestions)
-        self.money += self.calc_money(prompt, suggestions)
+    
         return suggestions
